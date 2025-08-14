@@ -1,0 +1,24 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- script: dotnet build
+  displayName: 'Build project'
+
+- script: dotnet test
+  displayName: 'Run tests'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: '$(dockerRegistryServiceConnection)'
+    repository: 'devops-pipeline-demo'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'

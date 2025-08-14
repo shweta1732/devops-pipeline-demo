@@ -1,0 +1,4 @@
+# Ignore build and temp files
+bin/
+obj/
+node_modules/
